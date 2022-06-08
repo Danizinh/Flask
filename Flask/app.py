@@ -35,6 +35,8 @@ def index():  # definido os dados de visualizacao
 
 @app.route('/new')
 def new():
+    if 'logged in user' not in session or session['logged in user'] == None:
+        return redirect('/login?next=new')
     return render_template('new.html', title='New Games')
 
 
@@ -52,7 +54,8 @@ def create():
 
 @app.route('/login')
 def login():
-    return render_template('login.html', title="Run your login")
+    next = request.args.get('next')
+    return render_template('login.html', title="Run your login", next=next)
 
 
 @app.route('/autenticar', methods=['POST', ])
@@ -60,10 +63,19 @@ def autenticar():
     if "alohomora" == request.form['password']:
         session['logged in user'] = request.form['user']
         flash(session['logged in user'] + ' user logged in successfully !')
-        return redirect('/')
+        # return redirect('/')
+        next_pag = request.form['next']
+        return redirect('/{}'.format(next_pag))  # return route new
     else:
         flash('user not logged in.')
         return redirect('/login')
+
+
+@app.route('/logout')
+def logout():
+    session['logged in user'] = None
+    flash('logout successfully !')
+    return redirect('/')
 
 
 app.run(debug=True)
