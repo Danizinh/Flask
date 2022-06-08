@@ -1,0 +1,22 @@
+{% extends "templates.html" %}
+{% block conteudo %} <!--  forma de herdar  !-->
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Console</th>
+                </tr>
+            </thead>
+            {% for jogo in jogos%}
+                <tbody>
+                <tr>
+                    <td>{{jogo.name}}</td>
+                    <td>{{jogo.category}}</td>
+                    <td>{{jogo.console}}</td>
+                    <!--Acessando as informacoes do object-->
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
