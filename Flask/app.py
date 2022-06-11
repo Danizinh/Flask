@@ -1,5 +1,3 @@
-import secrets
-
 from flask import Flask, flash, redirect, render_template, request, session
 
 
@@ -54,13 +52,15 @@ def create():
 
 @app.route('/login')
 def login():
-    next = request.args.get('next')
-    return render_template('login.html', title="Run your login", next=next)
+    next = request.args.get('next')  # capturar da inf da query string
+    # passando as infor para html
+    return render_template('login.html', title="Make your login", next=next)
 
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
     if "alohomora" == request.form['password']:
+        # Guardando o nome do user
         session['logged in user'] = request.form['user']
         flash(session['logged in user'] + ' user logged in successfully !')
         # return redirect('/')
